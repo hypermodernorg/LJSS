@@ -1,0 +1,78 @@
+﻿@model IEnumerable<LJSS.Models.WordModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.English)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Japanese)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pronunciation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Definition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Synonyms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Example)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.English)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Japanese)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pronunciation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Definition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Synonyms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Example)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

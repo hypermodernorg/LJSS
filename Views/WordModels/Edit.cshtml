@@ -1,0 +1,70 @@
+﻿@model LJSS.Models.WordModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>WordModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="English" class="control-label"></label>
+                <input asp-for="English" class="form-control" />
+                <span asp-validation-for="English" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Japanese" class="control-label"></label>
+                <input asp-for="Japanese" class="form-control" />
+                <span asp-validation-for="Japanese" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pronunciation" class="control-label"></label>
+                <input asp-for="Pronunciation" class="form-control" />
+                <span asp-validation-for="Pronunciation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Definition" class="control-label"></label>
+                <input asp-for="Definition" class="form-control" />
+                <span asp-validation-for="Definition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Synonyms" class="control-label"></label>
+                <input asp-for="Synonyms" class="form-control" />
+                <span asp-validation-for="Synonyms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Example" class="control-label"></label>
+                <input asp-for="Example" class="form-control" />
+                <span asp-validation-for="Example" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
