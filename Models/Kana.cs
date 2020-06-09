@@ -9,7 +9,7 @@ namespace LJSS.Models
     {
         public int ID { get; set; }
         public string Pronunciation { get; set; }
-        public string Hirogana { get; set; }
+        public string Hiragana { get; set; }
         public string Katakana { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace LJSS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Pronunciation,Hirogana,Katakana")] Kana kana)
+        public async Task<IActionResult> Create([Bind("ID,Pronunciation,Hiragana,Katakana")] Kana kana)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace LJSS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Pronunciation,Hirogana,Katakana")] Kana kana)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Pronunciation,Hiragana,Katakana")] Kana kana)
         {
             if (id != kana.ID)
             {
