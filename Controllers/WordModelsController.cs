@@ -54,7 +54,7 @@ namespace LJSS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example")] WordModel wordModel)
+        public async Task<IActionResult> Create([Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example,System")] WordModel wordModel)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace LJSS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example")] WordModel wordModel)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example,System")] WordModel wordModel)
         {
             if (id != wordModel.ID)
             {

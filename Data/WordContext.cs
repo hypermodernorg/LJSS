@@ -8,8 +8,10 @@ namespace LJSS.Data
         public WordContext(DbContextOptions<WordContext> options)
             : base(options)
         {
+            
         }
 
         public DbSet<WordModel> WordModel { get; set; }
+     
     }
 }

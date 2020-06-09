@@ -2,14 +2,33 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-family: 'UnifrakturCook', cursive;
+    text-shadow: 4px 4px 4px #aaa;
 }
 
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
+}
+
+#edit {
+    -webkit-filter: hue-rotate(180deg);
+    filter: invert(8%) sepia(93%) saturate(7363%) hue-rotate(247deg) brightness(98%) contrast(145%);
+}
+#view {
+    -webkit-filter: hue-rotate(180deg);
+    filter: invert(67%) sepia(77%) saturate(5225%) hue-rotate(86deg) brightness(125%) contrast(120%);
+}
+
+#delete {
+    -webkit-filter: hue-rotate(180deg);
+    filter: invert(19%) sepia(97%) saturate(6454%) hue-rotate(358deg) brightness(97%) contrast(114%);
+}
+#create {
+    filter: invert(67%) sepia(77%) saturate(5225%) hue-rotate(86deg) brightness(125%) contrast(120%);
 }
 
 .btn-primary {

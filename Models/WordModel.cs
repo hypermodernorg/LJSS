@@ -1,4 +1,6 @@
-using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+
 
 namespace LJSS.Models
 {
@@ -13,5 +15,6 @@ namespace LJSS.Models
         public string Category { get; set; }
         public string Synonyms { get; set; }
         public string Example { get; set; }
+        public string System { get; set; }
     }
 }

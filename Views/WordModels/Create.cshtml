@@ -3,21 +3,48 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<h1>Create</h1>
-
-<h4>WordModel</h4>
+<h4>Add New Word</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<form asp-action="Create">
+    <div class="row">
+
+        <div class="col-sm-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="English" class="control-label"></label>
                 <input asp-for="English" class="form-control" />
                 <span asp-validation-for="English" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Definition" class="control-label"></label>
+                <textarea asp-for="Definition" class="form-control"></textarea>
+                <span asp-validation-for="Definition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select class="form-control" asp-for="Category">
+                    <option selected="selected" value="Noun">Noun</option>
+                    <option value="Pronoun">Pronoun</option>
+                    <option value="Verb">Verb</option>
+                    <option value="Adjective">Adjective</option>
+                    <option value="Article">Article</option>
+                    <option value="Adverb">Adverb</option>
+                    <option value="Conjunction">Conjunction</option>
+                    <option value="Preposition">Preposition</option>
+                    <option value="Interjection">Interjection</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Example" class="control-label"></label>
+                <textarea asp-for="Example" class="form-control"></textarea>
+                <span asp-validation-for="Example" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-sm-6">
             <div class="form-group">
                 <label asp-for="Japanese" class="control-label"></label>
                 <input asp-for="Japanese" class="form-control" />
@@ -28,38 +55,35 @@
                 <input asp-for="Pronunciation" class="form-control" />
                 <span asp-validation-for="Pronunciation" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Definition" class="control-label"></label>
-                <input asp-for="Definition" class="form-control" />
-                <span asp-validation-for="Definition" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
+                <textarea asp-for="Notes" class="form-control"></textarea>
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Synonyms" class="control-label"></label>
                 <input asp-for="Synonyms" class="form-control" />
                 <span asp-validation-for="Synonyms" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Example" class="control-label"></label>
-                <input asp-for="Example" class="form-control" />
-                <span asp-validation-for="Example" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+                <label asp-for="System" class="control-label"></label>
+                <select class="form-control" asp-for="System">
+                    <option selected="selected" value="Hirogana">Hirogana</option>
+                    <option value="Katakana">Katakana</option>
+                    <option value="Kanji">Kanji</option>
+                </select>
 
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

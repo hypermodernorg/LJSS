@@ -1,15 +1,17 @@
 ﻿@model IEnumerable<LJSS.Models.WordModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "View All Words";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+    <div class="row">
+        <div class="col-sm-6"><h4>All Words</h4></div>
+        <div class="col-sm-6 text-right"><p><a asp-action="Create"><img src="~/assets/bi/plus-square.svg" /></a></p></div>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -23,19 +25,10 @@
                 @Html.DisplayNameFor(model => model.Pronunciation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Definition)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Synonyms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Example)
+                @Html.DisplayNameFor(model => model.System)
             </th>
             <th></th>
         </tr>
@@ -53,24 +46,15 @@
                 @Html.DisplayFor(modelItem => item.Pronunciation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Definition)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Synonyms)
+                @Html.DisplayFor(modelItem => item.System)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Example)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID"><img id="edit" src="~/assets/bi/pencil.svg" /></a>
+                <a asp-action="Details" asp-route-id="@item.ID"><img id="view" src="~/assets/bi/file-earmark-text.svg" /></a>
+                <a asp-action="Delete" asp-route-id="@item.ID"><img id ="delete" src="~/assets/bi/dash-square.svg" /></a>
             </td>
         </tr>
 }
