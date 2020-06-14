@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LJSS.Migrations.Word
 {
-    [DbContext(typeof(WordContext))]
+    [DbContext(typeof(VocabularyContext))]
     partial class WordContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

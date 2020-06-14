@@ -3,9 +3,9 @@ using LJSS.Models;
 
 namespace LJSS.Data
 {
-    public class WordContext : DbContext
+    public class VocabularyContext : DbContext
     {
-        public WordContext(DbContextOptions<WordContext> options)
+        public VocabularyContext(DbContextOptions<VocabularyContext> options)
             : base(options)
         {
             

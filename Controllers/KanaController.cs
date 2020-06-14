@@ -10,11 +10,11 @@ using LJSS.Models;
 
 namespace LJSS.Controllers
 {
-    public class KanasController : Controller
+    public class KanaController : Controller
     {
         private readonly KanaContext _context;
 
-        public KanasController(KanaContext context)
+        public KanaController(KanaContext context)
         {
             _context = context;
         }

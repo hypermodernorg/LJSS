@@ -10,11 +10,11 @@ using LJSS.Models;
 
 namespace LJSS.Controllers
 {
-    public class WordModelsController : Controller
+    public class VocabularyController : Controller
     {
-        private readonly WordContext _context;
+        private readonly VocabularyContext _context;
 
-        public WordModelsController(WordContext context)
+        public VocabularyController(VocabularyContext context)
         {
             _context = context;
         }

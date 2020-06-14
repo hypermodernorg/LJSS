@@ -1,0 +1,31 @@
+﻿@model IEnumerable<LJSS.Models.TransModel>
+
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>English to Japanese Translator</h4>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="row">
+            <label>English</label>
+        </div>
+        <div class="row">
+            <textarea id="English" class="form-control" rows="3"></textarea>
+        </div>
+        <br />
+        <br />
+    </div>
+    <div class="col-1"></div>
+    <div class="col-md-5">
+        <div class="row">
+            <label>Japanese</label>
+        </div>
+        <div class="row">
+            <textarea id="Japanese" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+</div>

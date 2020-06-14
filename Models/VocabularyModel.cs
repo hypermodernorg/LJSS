@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-
-
 namespace LJSS.Models
 {
     public class WordModel

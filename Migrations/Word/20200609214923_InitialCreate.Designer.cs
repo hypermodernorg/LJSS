@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LJSS.Migrations.Word
 {
-    [DbContext(typeof(WordContext))]
+    [DbContext(typeof(VocabularyContext))]
     [Migration("20200609214923_InitialCreate")]
     partial class InitialCreate
     {
