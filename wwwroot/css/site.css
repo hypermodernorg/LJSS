@@ -14,6 +14,10 @@ a {
   color: #0366d6;
 }
 
+#Japanese {
+    white-space:pre-wrap;
+}
+
 #edit {
     -webkit-filter: hue-rotate(180deg);
     filter: invert(8%) sepia(93%) saturate(7363%) hue-rotate(247deg) brightness(98%) contrast(145%);

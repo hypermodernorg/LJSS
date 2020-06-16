@@ -29,6 +29,8 @@ namespace LJSS
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
             services.AddDbContext<KanaContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
+            services.AddDbContext<TranslateContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
 
 
         }
