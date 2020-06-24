@@ -2,8 +2,18 @@
 @model IEnumerable<LJSS.Models.Kana>
 @{
     ViewData["Title"] = "Index";
+ 
     Layout = "~/Views/Shared/_Layout.cshtml";
+  
 }
+
+<script>
+    function playtheaudio(aID) {
+        var path = "\\assets\\sounds\\kana\\"
+        var snd = new Audio(path + aID + ".mp3");
+        snd.play();
+    }
+</script>
 
 <h1>Index</h1>
 
@@ -22,7 +32,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Katakana)
             </th>
-            <th></th>
+            <th>Utility</th>
         </tr>
     </thead>
     <tbody>
@@ -39,9 +49,23 @@
                     @Html.DisplayFor(modelItem => item.Katakana)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID"><img src="~/assets/bi/pencil.svg" /></a>
+                    <a asp-action="Details" asp-route-id="@item.ID"><img src="~/assets/bi/file-earmark-text.svg" /></a>
+                    <a asp-action="Delete" asp-route-id="@item.ID"><img src="~/assets/bi/dash-square.svg" /></a>
+
+                    @if (System.IO.File.Exists(ViewData["kanasound"].ToString() + item.Hiragana + ".mp3"))
+                    {
+                        <a id="@item.Hiragana" onclick="playtheaudio(this.id)"><img src="~/assets/bi/volume-up.svg" /></a>
+                       
+
+                    }
+
+                    else
+                    {
+                        <a id="@item.Hiragana" onclick="getKanaSound(this.id)" href="#">Create Audio</a>
+                    }
+
+
                 </td>
             </tr>
         }

@@ -19,4 +19,12 @@
         public string System { get; set; }
     }
 
+    public class KanaTrans
+    {
+        public int ID { get; set; }
+        public string Pronunciation { get; set; }
+        public string Hiragana { get; set; }
+        public string Katakana { get; set; }
+    
+    }
 }

@@ -9,6 +9,12 @@ a.navbar-brand {
     text-shadow: 4px 4px 4px #aaa;
 }
 
+.audio-button img{
+   
+   padding: 30px;
+    
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -83,12 +89,35 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  background-color: #000000;
+  height: 100%;
+
+}
+
+.fullheight {
+    height: 100%;
+    border-radius: 10px;
+}
+
+#rcorners1 {
+    border-radius: 25px;
+    background: #000000;
+
+
+
+}
+
+.maincontent {
+
+ 
+
 }
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+
+
 }
+
+

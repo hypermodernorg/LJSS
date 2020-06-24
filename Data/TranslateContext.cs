@@ -12,5 +12,6 @@ namespace LJSS.Data
         }
 
         public DbSet<WordModelTrans> WordModelTrans { get; set; }
+        public DbSet<KanaTrans> KanaTrans { get; set; }
     }
 }

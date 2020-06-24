@@ -31,8 +31,6 @@ namespace LJSS
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
             services.AddDbContext<TranslateContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +58,7 @@ namespace LJSS
             app.UseRouting();
 
             app.UseAuthorization();
-
+          
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
