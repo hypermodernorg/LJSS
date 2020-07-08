@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LJSS.Data;
 using LJSS.Models;
+using Google.Cloud.TextToSpeech.V1;
+using Microsoft.AspNetCore.Hosting;
 
 namespace LJSS.Controllers
 {
@@ -14,14 +16,25 @@ namespace LJSS.Controllers
     {
         private readonly VocabularyContext _context;
 
-        public VocabularyController(VocabularyContext context)
+        public static IWebHostEnvironment _env;
+        public VocabularyController(VocabularyContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: WordModels
         public async Task<IActionResult> Index()
         {
+
+            string webRootPath = _env.WebRootPath;
+            string vocabularysound = webRootPath + "/assets/sounds/vocabulary/";
+            string vocabularySoundHref = "http://localhost:5001/assets/sounds/vocabulary/";
+
+            ViewData["vocabularySoundHref"] = vocabularySoundHref;
+            ViewData["vocabularySound"] = vocabularysound;
+            ViewData["mp3"] = ".mp3";
+
             return View(await _context.WordModel.ToListAsync());
         }
 
@@ -149,5 +162,53 @@ namespace LJSS.Controllers
         {
             return _context.WordModel.Any(e => e.ID == id);
         }
+
+        public ActionResult VocabularySounds()
+        {
+            string webRootPath = _env.WebRootPath;
+            string vocabularyText = Request.Form["vocabularystring"];
+            string vocabularySound = webRootPath + "/assets/sounds/vocabulary/" + vocabularyText + ".mp3";
+            string vocabularySoundHref = "http://localhost:5001" + "/assets/sounds/vocabulary/" + vocabularyText + ".mp3";
+
+            //////////////////////////////////////////////
+            // try texttospeech
+            var client = TextToSpeechClient.Create();
+            var input = new SynthesisInput
+            {
+                Text = vocabularyText
+            };
+
+            // Build the voice request.
+            var voiceSelection = new VoiceSelectionParams
+            {
+                LanguageCode = "ja-JP",
+                SsmlGender = SsmlVoiceGender.Female,
+                Name = "ja-JP-Wavenet-A"
+            };
+
+            // Specify the type of audio file.
+            var audioConfig = new AudioConfig
+            {
+                AudioEncoding = AudioEncoding.Mp3
+            };
+
+            // Perform the text-to-speech request.
+            var response = client.SynthesizeSpeech(input, voiceSelection, audioConfig);
+
+            // Write the response to the output file.
+
+            if (System.IO.File.Exists(vocabularySound) == false)
+            {
+                using var output = System.IO.File.Create(vocabularySound);
+                response.AudioContent.WriteTo(output);
+            }
+
+
+            // end try text to speech
+            //////////////////////////////////////////////
+
+            return new JsonResult(vocabularySoundHref);
+        }
+
     }
 }

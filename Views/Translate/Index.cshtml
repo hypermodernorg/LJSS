@@ -7,19 +7,30 @@
 }
 
 <h4>English to Japanese Translator</h4>
-<br /><br />
 
-<div class="row m-0">
-    <div class="col-sm-12">
-        <div class="row">
-            <label>English</label>
-        </div>
-        <div class="row">
-            <textarea id="English" class="form-control" rows="3"></textarea>
-        </div>
-        <br />
-        <div class="row">
-            <label id="Japanese"></label>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card  bg-light border-dark mb-3">
+            <div class="card-header"><strong>English</strong></div>
+            <div class="card-body">
+                <textarea id="English" class="form-control border-0" rows="3"></textarea>
+                <input type="submit"  class ="mt-3 btn btn-primary" onclick="getTranslation()" />
+            </div>
         </div>
     </div>
+    <div class="col-sm-6">
+        <div class="card bg-light border-dark mb-3">
+            <div class="card-header"><strong>Japanese</strong></div>
+            <div class="card-body">
+                <label id="Japanese"></label>
+                <div class="row pb-2" id="audiohere">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row m-0">
+    <p>* Disclaimer - The translator above uses google translate. Because of the vast differences between English and Japanese, and because of the complexities of the Japanese system, Google translations of Japanese my not be accurate, and in some cases, far from accurate.</p>
 </div>

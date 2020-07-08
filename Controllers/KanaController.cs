@@ -39,6 +39,33 @@ namespace LJSS.Controllers
             return View(await _context.Kana.ToListAsync());
         }
 
+        // Kana Quiz
+        public async Task<IActionResult> QuizH()
+        {
+             
+            string webRootPath = _env.WebRootPath;
+            string kanasound = webRootPath + "/assets/sounds/kana/";
+            string kanasoundhreg = "http://localhost:5001/assets/sounds/kana/";
+
+            ViewData["kanasoundhreg"] = kanasoundhreg;
+            ViewData["kanasound"] = kanasound;
+            ViewData["mp3"] = ".mp3";
+            return View(await _context.Kana.ToListAsync());
+        }
+        public async Task<IActionResult> QuizK()
+        {
+
+            string webRootPath = _env.WebRootPath;
+            string kanasound = webRootPath + "/assets/sounds/kana/";
+            string kanasoundhreg = "http://localhost:5001/assets/sounds/kana/";
+
+            ViewData["kanasoundhreg"] = kanasoundhreg;
+            ViewData["kanasound"] = kanasound;
+            ViewData["mp3"] = ".mp3";
+            return View(await _context.Kana.ToListAsync());
+        }
+
+
         // GET: Kanas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -170,16 +197,12 @@ namespace LJSS.Controllers
             string kanaText = Request.Form["kanastring"];
             string kanasound = webRootPath + "/assets/sounds/kana/" + kanaText + ".mp3";
             string kanasoundhreg = "http://localhost:5001" + "/assets/sounds/kana/" + kanaText + ".mp3";
-
-            //////////////////////////////////////////////
-            // try texttospeech
             var client = TextToSpeechClient.Create();
             var input = new SynthesisInput
             {
                 Text = kanaText
             };
 
-            // Build the voice request.
             var voiceSelection = new VoiceSelectionParams
             {
                 LanguageCode = "ja-JP",
@@ -187,27 +210,17 @@ namespace LJSS.Controllers
                 Name = "ja-JP-Wavenet-A"
             };
 
-            // Specify the type of audio file.
             var audioConfig = new AudioConfig
             {
                 AudioEncoding = AudioEncoding.Mp3
             };
 
-            // Perform the text-to-speech request.
             var response = client.SynthesizeSpeech(input, voiceSelection, audioConfig);
-
-            // Write the response to the output file.
-            
             if (System.IO.File.Exists(kanasound) == false)
             {
                 using var output = System.IO.File.Create(kanasound);
                 response.AudioContent.WriteTo(output);
             }
-
-           
-            // end try text to speech
-            //////////////////////////////////////////////
-
             return new JsonResult(kanasoundhreg);
         }
     }

@@ -1,33 +1,38 @@
 ﻿@model IEnumerable<LJSS.Models.WordModel>
 
 @{
-    ViewData["Title"] = "View All Words";
+    ViewData["Title"] = "VOCABULARY";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+    <script>
+        function playtheaudio(aID) {
+            var path = "\\assets\\sounds\\vocabulary\\"
+            var snd = new Audio(path + aID + ".mp3");
+            snd.play();
+        }
+    </script>
+
 
     <div class="row">
-        <div class="col-sm-6"><h4>All Words</h4></div>
+        <div class="col-sm-6"><h4>VOCABULARY</h4></div>
         <div class="col-sm-6 text-right"><p><a asp-action="Create"><img src="~/assets/bi/plus-square.svg" /></a></p></div>
     </div>
 
 
 
-<table class="table">
+<table id="kanatable" class="table">
     <thead>
-        <tr>
-            <th>
+        <tr class="table-primary">
+            <th onclick="sortTable(0)">
                 @Html.DisplayNameFor(model => model.English)
             </th>
-            <th>
+            <th onclick="sortTable(1)">
                 @Html.DisplayNameFor(model => model.Japanese)
             </th>
-            <th>
+            <th onclick="sortTable(2)">
                 @Html.DisplayNameFor(model => model.Pronunciation)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
+            <th onclick="sortTable(3)">
                 @Html.DisplayNameFor(model => model.System)
             </th>
             <th>Utility</th>
@@ -35,7 +40,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="table-secondary">
             <td>
                 @Html.DisplayFor(modelItem => item.English)
             </td>
@@ -46,15 +51,22 @@
                 @Html.DisplayFor(modelItem => item.Pronunciation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.System)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID"><img id="edit" src="~/assets/bi/pencil.svg" /></a>
                 <a asp-action="Details" asp-route-id="@item.ID"><img id="view" src="~/assets/bi/file-earmark-text.svg" /></a>
-                <a asp-action="Delete" asp-route-id="@item.ID"><img id ="delete" src="~/assets/bi/dash-square.svg" /></a>
+                <a asp-action="Delete" asp-route-id="@item.ID"><img id="delete" src="~/assets/bi/dash-square.svg" /></a>
+
+                @if (System.IO.File.Exists(ViewData["vocabularySound"].ToString() + item.Japanese + ".mp3"))
+                {
+                    <a id="@item.Japanese" onclick="playtheaudio(this.id)"><img class="audioicon" src="~/assets/bi/volume-up.svg" /></a>
+                }
+
+                else
+                {
+                    <a id="@item.Japanese" onclick="getVocabularySound(this.id)" href="#">Create Audio</a>
+                }
             </td>
         </tr>
 }

@@ -31,6 +31,7 @@ namespace LJSS
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
             services.AddDbContext<TranslateContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +45,7 @@ namespace LJSS
                 contextWord.Database.Migrate();
                 var contextKana = serviceScope.ServiceProvider.GetRequiredService<VocabularyContext>();
                 contextKana.Database.Migrate();
+ 
             }
             if (env.IsDevelopment())
             {
@@ -54,11 +56,11 @@ namespace LJSS
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
-
+        
             app.UseRouting();
 
             app.UseAuthorization();
-          
+ 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -12,6 +12,8 @@ using Google.Cloud.TextToSpeech;
 using Google.Cloud.TextToSpeech.V1;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Google.Cloud.Translation.V2;
+using Microsoft.AspNetCore.Hosting;
 
 
 // Important to remember for distribution is that the api key needs to be set in the environment variables 
@@ -21,11 +23,13 @@ namespace LJSS.Controllers
 {
     public class TranslateController : Controller
     {
+        public static IWebHostEnvironment _env;
         private readonly TranslateContext _context;
 
-        public TranslateController(TranslateContext context)
+        public TranslateController(TranslateContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         public ActionResult Index()
@@ -86,72 +90,24 @@ namespace LJSS.Controllers
                 TEnglish = Request.Form["estring"]
             };
 
-            // process translation request
-            // 1. process english into list of words.
-            string[] uwords = tjapanese.TEnglish.Split(' ');
 
-            // 2. get corresponding japanese words from database.
-            var dbwords = _context.WordModelTrans
-                .FromSqlRaw("SELECT * FROM WordModel")
-                .ToList();
+            // get translation
+            TranslationClient client = TranslationClient.Create();
+            TranslationResult result = client.TranslateText(tjapanese.TEnglish, LanguageCodes.Japanese);
+            var resultText = result.TranslatedText;
 
-            var kanas = _context.KanaTrans
-                .FromSqlRaw("SELECT * FROM Kana")
-                .ToList();
-
-            string buildJapaneseOutput = "";
-            string buildTransliterationOutput = "";
-
-            foreach (var uword in uwords)
-            {
-                foreach (var dbword in dbwords)
-                {
-                    var english = dbword.English;
-                    var japanese = dbword.Japanese;
-                    var transliteration = dbword.Pronunciation;
-
-                    if (english == uword)
-                    {
-                        if (dbword.System == "Hiragana")
-                        {
-                            buildJapaneseOutput += japanese + " | ";
-                            buildTransliterationOutput += GetKanaH(kanas, dbword.Japanese) + " | ";
-                            break;
-                        }
-                        else if (dbword.System == "Katakana")
-                        {
-                            buildJapaneseOutput += japanese + " | ";
-                            buildTransliterationOutput += GetKanaK(kanas, dbword.Japanese) + " | ";
-                            break;
-                        }
-
-                        else if (dbword.System == "Kanji")
-                        {
-                            buildJapaneseOutput += japanese + " | ";
-                            buildTransliterationOutput += transliteration + " | ";
-                            break;
-                        }
-                    }
-                }
-            }
-
-
-            // end process translation request
-
-            //////////////////////////////////////////////
-            // try texttospeech
-            var client = TextToSpeechClient.Create();
+            // get translated audio
+            var audioClient = TextToSpeechClient.Create();
             var input = new SynthesisInput
             {
-                Text = "こんにちは"
+                Text = resultText
             };
-
             // Build the voice request.
             var voiceSelection = new VoiceSelectionParams
             {
                 LanguageCode = "ja-JP",
                 SsmlGender = SsmlVoiceGender.Female,
-                Name= "ja-JP-Wavenet-A"
+                Name = "ja-JP-Wavenet-A"
             };
 
             // Specify the type of audio file.
@@ -159,19 +115,71 @@ namespace LJSS.Controllers
             {
                 AudioEncoding = AudioEncoding.Mp3
             };
-
             // Perform the text-to-speech request.
-            var response = client.SynthesizeSpeech(input, voiceSelection, audioConfig);
+            var response = audioClient.SynthesizeSpeech(input, voiceSelection, audioConfig);
 
             // Write the response to the output file.
-            //using (var output = System.IO.File.Create("output.mp3"))
+
+            string webRootPath = _env.WebRootPath;
+            string translatesoundpath = webRootPath + "/assets/sounds/translations/" + resultText + ".mp3";
+            string translatesoundhref = "http://localhost:5001" + "/assets/sounds/translations/" + resultText + ".mp3";
+            if (System.IO.File.Exists(translatesoundpath) == false)
+            {
+                using var output = System.IO.File.Create(translatesoundpath);
+                response.AudioContent.WriteTo(output);
+            }
+
+            return new JsonResult(resultText);
+
+            //// process translation request
+            //// 1. process english into list of words.
+            //string[] uwords = tjapanese.TEnglish.Split(' ');
+
+            //// 2. get corresponding japanese words from database.
+            //var dbwords = _context.WordModelTrans
+            //    .FromSqlRaw("SELECT * FROM WordModel")
+            //    .ToList();
+
+            //var kanas = _context.KanaTrans
+            //    .FromSqlRaw("SELECT * FROM Kana")
+            //    .ToList();
+
+            //string buildJapaneseOutput = "";
+            //string buildTransliterationOutput = "";
+
+            //foreach (var uword in uwords)
             //{
-            //    response.AudioContent.WriteTo(output);
+            //    foreach (var dbword in dbwords)
+            //    {
+            //        var english = dbword.English;
+            //        var japanese = dbword.Japanese;
+            //        var transliteration = dbword.Pronunciation;
+
+            //        if (english == uword)
+            //        {
+            //            if (dbword.System == "Hiragana")
+            //            {
+            //                buildJapaneseOutput += japanese + " | ";
+            //                buildTransliterationOutput += GetKanaH(kanas, dbword.Japanese) + " | ";
+            //                break;
+            //            }
+            //            else if (dbword.System == "Katakana")
+            //            {
+            //                buildJapaneseOutput += japanese + " | ";
+            //                buildTransliterationOutput += GetKanaK(kanas, dbword.Japanese) + " | ";
+            //                break;
+            //            }
+
+            //            else if (dbword.System == "Kanji")
+            //            {
+            //                buildJapaneseOutput += japanese + " | ";
+            //                buildTransliterationOutput += transliteration + " | ";
+            //                break;
+            //            }
+            //        }
+            //    }
             //}
-            // end try text to speech
-            //////////////////////////////////////////////
-         
-            return new JsonResult(buildJapaneseOutput.Concat("\n" + buildTransliterationOutput));
+            //return new JsonResult(buildJapaneseOutput.Concat("\n" + buildTransliterationOutput + "\n" + resultText));
         }
     }
 }

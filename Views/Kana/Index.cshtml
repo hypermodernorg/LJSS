@@ -1,10 +1,10 @@
 ﻿
 @model IEnumerable<LJSS.Models.Kana>
 @{
-    ViewData["Title"] = "Index";
- 
+    ViewData["Title"] = "KANA";
+
     Layout = "~/Views/Shared/_Layout.cshtml";
-  
+
 }
 
 <script>
@@ -15,21 +15,22 @@
     }
 </script>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<div class="row">
+    <div class="col-sm-6"><h4>KANA</h4></div>
+    <div class="col-sm-6 text-right"><p><a asp-action="Create"><img src="~/assets/bi/plus-square.svg" /></a></p></div>
+</div>
+
+<table  id ="kanatable" class="table">
     <thead>
-        <tr>
-            <th>
+        <tr class="table-primary">
+            <th onclick="sortTable(0)">
                 @Html.DisplayNameFor(model => model.Pronunciation)
             </th>
-            <th>
+            <th onclick="sortTable(1)">
                 @Html.DisplayNameFor(model => model.Hiragana)
             </th>
-            <th>
+            <th onclick="sortTable(2)">
                 @Html.DisplayNameFor(model => model.Katakana)
             </th>
             <th>Utility</th>
@@ -38,7 +39,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="table-secondary">
                 <td>
                     @Html.DisplayFor(modelItem => item.Pronunciation)
                 </td>
@@ -49,15 +50,13 @@
                     @Html.DisplayFor(modelItem => item.Katakana)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID"><img src="~/assets/bi/pencil.svg" /></a>
-                    <a asp-action="Details" asp-route-id="@item.ID"><img src="~/assets/bi/file-earmark-text.svg" /></a>
-                    <a asp-action="Delete" asp-route-id="@item.ID"><img src="~/assets/bi/dash-square.svg" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.ID"><img id="edit" src="~/assets/bi/pencil.svg" /></a>
+                    <a asp-action="Details" asp-route-id="@item.ID"><img id="view" src="~/assets/bi/file-earmark-text.svg" /></a>
+                    <a asp-action="Delete" asp-route-id="@item.ID"><img id="delete" src="~/assets/bi/dash-square.svg" /></a>
 
                     @if (System.IO.File.Exists(ViewData["kanasound"].ToString() + item.Hiragana + ".mp3"))
                     {
-                        <a id="@item.Hiragana" onclick="playtheaudio(this.id)"><img src="~/assets/bi/volume-up.svg" /></a>
-                       
-
+                        <a id="@item.Hiragana" onclick="playtheaudio(this.id)"><img class="audioicon" src="~/assets/bi/volume-up.svg" /></a>
                     }
 
                     else
