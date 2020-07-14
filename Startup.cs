@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Identity.Models;
+
 using LJSS.Data;
 
 namespace LJSS
@@ -25,13 +28,19 @@ namespace LJSS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // identity
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
+            // end identity
+            
             services.AddDbContext<VocabularyContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
             services.AddDbContext<KanaContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
             services.AddDbContext<TranslateContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
-           
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,18 +64,23 @@ namespace LJSS
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-        
             app.UseRouting();
 
+            // identity
+            app.UseAuthentication();
             app.UseAuthorization();
- 
+            // end identity
+           
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }
