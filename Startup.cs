@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Identity.Models;
+using LJSS.Models;
 
 using LJSS.Data;
 
@@ -32,8 +32,9 @@ namespace LJSS
             // identity
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Authenticate/Login");
             // end identity
-            
+
             services.AddDbContext<VocabularyContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
             services.AddDbContext<KanaContext>(options =>

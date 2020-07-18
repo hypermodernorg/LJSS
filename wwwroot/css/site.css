@@ -1,16 +1,14 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-/*
-
-    a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-    font-family: 'UnifrakturCook', cursive;
-    text-shadow: 4px 4px 4px #aaa;
+﻿.navbar .login-btn {
+    position: absolute;
+    top: 0px;
+    right: 15px;
 }
 
-*/
+@media (max-width: 767px) {
+    .navbar .login-btn {
+        right: 75px;
+    }
+}
 
 
 .audio-button img{
@@ -19,11 +17,20 @@ for details on configuring this project to bundle and minify static web assets. 
     
 }
 
+.account {
+    display: block;
+    text-indent: -9999px;
+    width: 30px;
+    height: 30px;
+    background: url(/assets/bi/person-circle.svg);
+    background-size: 30px 30px;
+}
+
+
+/*background-image: url("data:image/svg+xml,<svg viewBox='0 0 16 16' fill='%23333' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z' clip-rule='evenodd'/></svg>");*/
 /* Provide sufficient contrast against white background */
-
-
 #Japanese {
-    white-space:pre-wrap;
+    white-space: pre-wrap;
 }
 
 #edit {

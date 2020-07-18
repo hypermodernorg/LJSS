@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Identity.Models
+namespace LJSS.Models
 {
     public class AppIdentityDbContext : IdentityDbContext<AppUser>
     {

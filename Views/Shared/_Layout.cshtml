@@ -7,17 +7,23 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 <body>
-    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
+
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LJSS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav">
+
+
+
+            @* Begin Navigation *@
+            <div class="collapse navbar-collapse " id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Vocabulary" asp-action="Index">Vocabulary</a>
                     </li>
@@ -34,22 +40,54 @@
                         <a class="nav-link" asp-area="" asp-controller="Translate" asp-action="Index">Translate</a>
                     </li>
                 </ul>
-          
+
+                <ul class="navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="text-white">@User.Identity.Name   </a>
+                            <a class="text-white fa fa-user-circle" data-toggle="dropdown"></a>
+                            <div class="dropdown-menu" aria-labelledby="download">
+                                <a class="dropdown-item" sp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                @if (User.Identity.Name == "Lander")
+                                {
+                                    <a class="dropdown-item" sp-area="" asp-controller="Admin" asp-action="Create">Add User</a>
+                                    <a class="dropdown-item" sp-area="" asp-controller="Admin" asp-action="Index">User List</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" sp-area="" asp-controller="Role" asp-action="Create">Create Role</a>
+                                    <a class="dropdown-item" sp-area="" asp-controller="Role" asp-action="Index">View Roles</a>
+                                }
+
+
+                            </div>
+                        </li>
+                    }
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a style="text-align: right;" class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                    }
+                </ul>
             </div>
+            @* End Navigation *@
+
+
         </div>
     </div>
 
-    <div class="container pt-5 mt-5">
+    <div class="container mt-4">
         <main role="main">
             @RenderBody()
         </main>
     </div>
 
-        <div class="footer bg-primary text-white">
-            <div class="container">
-                &copy; 2020 - LJSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
+    <div class="footer bg-primary text-white">
+        <div class="container">
+            &copy; 2020 - LJSS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
