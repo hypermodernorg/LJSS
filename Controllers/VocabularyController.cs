@@ -9,6 +9,8 @@ using LJSS.Data;
 using LJSS.Models;
 using Google.Cloud.TextToSpeech.V1;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace LJSS.Controllers
 {
@@ -34,6 +36,7 @@ namespace LJSS.Controllers
             ViewData["vocabularySoundHref"] = vocabularySoundHref;
             ViewData["vocabularySound"] = vocabularysound;
             ViewData["mp3"] = ".mp3";
+            ViewData["isauthorized"] = User.IsInRole("Admin");
 
             return View(await _context.WordModel.ToListAsync());
         }
@@ -67,10 +70,11 @@ namespace LJSS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example,System")] WordModel wordModel)
+        public async Task<IActionResult> Create([Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example,System,UserName")] WordModel wordModel)
         {
             if (ModelState.IsValid)
             {
+                wordModel.UserName = User.Identity.Name;
                 _context.Add(wordModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -99,7 +103,7 @@ namespace LJSS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example,System")] WordModel wordModel)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,English,Japanese,Pronunciation,Definition,Notes,Category,Synonyms,Example,System,UserName")] WordModel wordModel)
         {
             if (id != wordModel.ID)
             {

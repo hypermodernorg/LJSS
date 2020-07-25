@@ -12,5 +12,6 @@ namespace LJSS.Models
         public string Synonyms { get; set; }
         public string Example { get; set; }
         public string System { get; set; }
+        public string UserName { get; set; }
     }
 }

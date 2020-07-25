@@ -35,6 +35,14 @@
             <th onclick="sortTable(3)">
                 @Html.DisplayNameFor(model => model.System)
             </th>
+            @if (User.IsInRole("Admin") is true)
+            {
+                <th onclick="sortTable(4)">
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+
+            }
+
             <th>Utility</th>
         </tr>
     </thead>
@@ -53,6 +61,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.System)
             </td>
+            
+            @if (User.IsInRole("Admin") is true)
+            {
+
+            }
+
+
+            @if (ViewData["isauthorized"] is true)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+
+            }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID"><img id="edit" src="~/assets/bi/pencil.svg" /></a>
                 <a asp-action="Details" asp-route-id="@item.ID"><img id="view" src="~/assets/bi/file-earmark-text.svg" /></a>
@@ -68,6 +90,7 @@
                     <a id="@item.Japanese" onclick="getVocabularySound(this.id)" href="#">Create Audio</a>
                 }
             </td>
+
         </tr>
 }
     </tbody>
