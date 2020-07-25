@@ -49,36 +49,37 @@
     <tbody>
 @foreach (var item in Model) {
         <tr class="table-secondary">
-            <td>
-                @Html.DisplayFor(modelItem => item.English)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Japanese)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pronunciation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.System)
-            </td>
-            
-            @if (User.IsInRole("Admin") is true)
-            {
 
-            }
+            @if (User.Identity.Name == item.UserName || User.IsInRole("Admin") || User.IsInRole("Editor")) {
 
-
-            @if (ViewData["isauthorized"] is true)
-            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
+                    @Html.DisplayFor(modelItem => item.English)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Japanese)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pronunciation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.System)
+                </td>
+                @if (User.IsInRole("Admin") is true)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
 
-            }
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID"><img id="edit" src="~/assets/bi/pencil.svg" /></a>
+                }
+                <td>
+                @if (User.IsInRole("Admin") is true || User.Identity.Name == item.UserName || User.IsInRole("Editor"))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.ID"><img id="delete" src="~/assets/bi/dash-square.svg" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.ID"><img id="edit" src="~/assets/bi/pencil.svg" /></a>
+                }
+
                 <a asp-action="Details" asp-route-id="@item.ID"><img id="view" src="~/assets/bi/file-earmark-text.svg" /></a>
-                <a asp-action="Delete" asp-route-id="@item.ID"><img id="delete" src="~/assets/bi/dash-square.svg" /></a>
+
 
                 @if (System.IO.File.Exists(ViewData["vocabularySound"].ToString() + item.Japanese + ".mp3"))
                 {
@@ -90,7 +91,7 @@
                     <a id="@item.Japanese" onclick="getVocabularySound(this.id)" href="#">Create Audio</a>
                 }
             </td>
-
+            }
         </tr>
 }
     </tbody>
