@@ -131,55 +131,7 @@ namespace LJSS.Controllers
 
             return new JsonResult(resultText);
 
-            //// process translation request
-            //// 1. process english into list of words.
-            //string[] uwords = tjapanese.TEnglish.Split(' ');
-
-            //// 2. get corresponding japanese words from database.
-            //var dbwords = _context.WordModelTrans
-            //    .FromSqlRaw("SELECT * FROM WordModel")
-            //    .ToList();
-
-            //var kanas = _context.KanaTrans
-            //    .FromSqlRaw("SELECT * FROM Kana")
-            //    .ToList();
-
-            //string buildJapaneseOutput = "";
-            //string buildTransliterationOutput = "";
-
-            //foreach (var uword in uwords)
-            //{
-            //    foreach (var dbword in dbwords)
-            //    {
-            //        var english = dbword.English;
-            //        var japanese = dbword.Japanese;
-            //        var transliteration = dbword.Pronunciation;
-
-            //        if (english == uword)
-            //        {
-            //            if (dbword.System == "Hiragana")
-            //            {
-            //                buildJapaneseOutput += japanese + " | ";
-            //                buildTransliterationOutput += GetKanaH(kanas, dbword.Japanese) + " | ";
-            //                break;
-            //            }
-            //            else if (dbword.System == "Katakana")
-            //            {
-            //                buildJapaneseOutput += japanese + " | ";
-            //                buildTransliterationOutput += GetKanaK(kanas, dbword.Japanese) + " | ";
-            //                break;
-            //            }
-
-            //            else if (dbword.System == "Kanji")
-            //            {
-            //                buildJapaneseOutput += japanese + " | ";
-            //                buildTransliterationOutput += transliteration + " | ";
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-            //return new JsonResult(buildJapaneseOutput.Concat("\n" + buildTransliterationOutput + "\n" + resultText));
+       
         }
     }
 }
