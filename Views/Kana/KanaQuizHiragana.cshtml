@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Hiragana Kana Quiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>KANA QUIZ - HIRAGANA</h4>
+
+<div class="row">
+    <div class="col">
+        <div class="jumbotron">
+            <div id="kanaquizdisplay">
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <form>
+            <fieldset class="form-group" id="fg1">
+            </fieldset>
+            <input type="button" id="submitQuiz" class="mt-3 btn btn-primary" value="Start Quiz" onclick="getQuiz(0)" />
+            <input type="hidden" id="numberCorrect" name="custId" value="0">
+            <br />
+        </form>
+    </div>
+</div>

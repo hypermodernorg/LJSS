@@ -1,4 +1,120 @@
-﻿// Translation function
+﻿// getQuiz functions
+function getQuiz(cnt) {
+    var numQuestions = 2;
+
+    if (cnt < numQuestions) {
+
+        // check answers, bit not if the count is zero as zero indicates the first pass and the first pass 
+        // of this script, and the first past should have no answers.
+        if (cnt != 0) {
+            var goodjob = false;
+
+            // go through each radio element and determine if the checked element is the correct answer.
+            for (var j = 0; j < 4; j++) {
+
+                if (document.getElementById("optionsRadios" + j).checked == true && document.getElementById("optionsRadios" + j).value == "good") {
+                    var goodjob = true;
+                }
+            }
+
+            // If the correct answer was selected, increase the count of the hidden input's value. Also, do a little animation of the button
+            // to indicate if the answer was correct or not.  
+            if (goodjob == true) {
+                var orig = document.getElementById("submitQuiz").style.backgroundColor;
+                document.getElementById("submitQuiz").style.backgroundColor = "#00FF00";
+                setTimeout(function () {
+                    document.getElementById("submitQuiz").style.backgroundColor = orig;
+                }, 1000);
+                document.getElementById("numberCorrect").value = parseInt(document.getElementById("numberCorrect").value) + 1;
+            }
+            else {
+                var orig = document.getElementById("submitQuiz").style.backgroundColor;
+                document.getElementById("submitQuiz").style.backgroundColor = "#FF0000";
+                setTimeout(function () {
+                    document.getElementById("submitQuiz").style.backgroundColor = orig;
+                }, 1000);
+              
+            }
+        }
+        // end check the answere
+
+        var btncnt = document.getElementById("submitQuiz");
+        btncnt.setAttribute("onclick", "getQuiz(" + (cnt + 1) + ")"); // determines how many questions have been answered.
+
+        $.ajax({
+            type: 'POST',
+            url: '/Kana/GetQuizItem',
+
+            // The data to pass into the function.
+            //data: { estring: englishText },
+            success: function (result) {
+
+                var fieldset = document.getElementById("fg1");
+                fieldset.innerHTML = "";
+
+                if (document.getElementById("kqlegend") != null) {
+                    document.getElementById("kqlegend").remove;
+                }
+
+                //legend not working
+                var legend = document.createElement("LEGEND");
+                legend.innerHTML = "Which Romaji Corresponds to the Above Kana";
+                fieldset.appendChild(legend);
+
+                var kanaquizdisplay = document.getElementById("kanaquizdisplay");
+                kanaquizdisplay.innerHTML = result[0];
+
+                let opts = result;
+                let good = result[1];
+
+                opts.splice(0, 1); // remove first item
+                var rand = Math.floor(Math.random() * opts.length);
+
+                for (var i = 0; i < 4; i++) {
+                    rand = Math.floor(Math.random() * opts.length);
+                    var opt = document.createElement("div");
+                    opt.classList.add("form-check");
+
+                    var inp = document.createElement("input");
+                    inp.setAttribute("type", "radio");
+                    inp.setAttribute("name", 'optionsRadios');
+                    inp.setAttribute("id", 'optionsRadios' + i);
+                    inp.classList.add("form-check-input");
+
+                    if (opts[rand] == good) {
+
+                        inp.setAttribute("value", "good");
+                    }
+
+                    var lbl = document.createElement("LABEL");
+                    lbl.setAttribute("class", "form-check-label");
+                    lbl.innerHTML = i + ' ' + rand + ' ' + opts[rand] + ' | result | ' + good;
+
+                    opt.appendChild(inp);
+                    opt.appendChild(lbl);
+                    fieldset.appendChild(opt);
+
+                    opts.splice(rand, 1);
+                }
+            }
+        });
+    }
+
+    // if the number of questions are exhuasted, do the below.
+    else {
+        var fieldset = document.getElementById("fg1");
+        var kanaquizdisplay = document.getElementById("kanaquizdisplay");
+        var numberCorrect = document.getElementById("numberCorrect").value;
+        fieldset.innerHTML = "";
+        kanaquizdisplay.innerHTML = "You got " + numberCorrect + " correct out of a total of " + numQuestions + " For a score of " + (numberCorrect/numQuestions) * 100;
+
+
+    }
+}
+
+
+
+// Translation function
 function getTranslation() {
     var englishText = $('#English').val();
     englishText = englishText.replace(/[\n\r]+/g, '');

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<LJSS.Models.Kana>
+
+
+@{
+    ViewData["Title"] = "Begin Kana Quiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>KANA QUIZ</h4>
+
+<div class="row">
+    <div class="col">
+        <div class="jumbotron">
+            <h1 class="display-3">Begin Quiz</h1>
+            <p class="lead">Kana are the syllables that make up Hiragana and Katakana words. Choose an option below to test your knowledge of Kana. To track your results, please log in.</p>
+            <hr class="my-4">
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" asp-controller="Kana" asp-action="KanaQuizHiragana" role="button">Kana Quiz for Hiragana</a>
+                <a class="btn btn-primary btn-lg" asp-controller="Kana" asp-action="KanaQuizKatakana" role="button">Kana Quiz for Katakana</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+
+    </div>
+</div>
+

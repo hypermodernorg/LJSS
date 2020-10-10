@@ -12,6 +12,8 @@ namespace LJSS.Data
         }
 
         public DbSet<Kana> Kana { get; set; }
-     
+        public DbSet<KanaQuizH> KanaQuizH { get; set; }
+        public DbSet<KanaQuizK> KanaQuizK { get; set; }
+
     }
 }

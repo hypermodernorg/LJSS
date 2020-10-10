@@ -11,6 +11,7 @@ using LJSS.Models;
 using Google.Cloud.TextToSpeech.V1;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace LJSS.Controllers
 {
@@ -40,29 +41,60 @@ namespace LJSS.Controllers
         }
 
         // Kana Quiz
-        public async Task<IActionResult> QuizH()
-        {
-             
-            string webRootPath = _env.WebRootPath;
-            string kanasound = webRootPath + "/assets/sounds/kana/";
-            string kanasoundhreg = "http://localhost:5001/assets/sounds/kana/";
 
-            ViewData["kanasoundhreg"] = kanasoundhreg;
-            ViewData["kanasound"] = kanasound;
-            ViewData["mp3"] = ".mp3";
-            return View(await _context.Kana.ToListAsync());
+        public ActionResult QuizBegin()
+        {
+            return View();
         }
-        public async Task<IActionResult> QuizK()
+
+        public async Task<IActionResult> KanaQuizHiragana()
         {
 
-            string webRootPath = _env.WebRootPath;
-            string kanasound = webRootPath + "/assets/sounds/kana/";
-            string kanasoundhreg = "http://localhost:5001/assets/sounds/kana/";
+            //var rand = new Random();
+            //var random = rand.Next(109);
+            //var kanalist = await _context.Kana.ToListAsync();
 
-            ViewData["kanasoundhreg"] = kanasoundhreg;
-            ViewData["kanasound"] = kanasound;
-            ViewData["mp3"] = ".mp3";
-            return View(await _context.Kana.ToListAsync());
+            //var kanadisplayvariables = new List<string>
+            //{
+            //    kanalist[random].Hiragana,
+            //    kanalist[random].Pronunciation,
+            //    kanalist[rand.Next(45)].Pronunciation,
+            //    kanalist[rand.Next(45)].Pronunciation,
+            //    kanalist[rand.Next(45)].Pronunciation
+            //};
+
+            //ViewData["KD"] = kanadisplayvariables;
+
+            return View();
+        }
+
+
+        public ActionResult GetQuizItem()
+        {
+
+            var rand = new Random();
+            var random = rand.Next(109);
+            var kanalist = Task.Run(() => _context.Kana.ToListAsync()).Result; // Theoretically avoids the await and async keywards
+
+            var kanadisplayvariables = new List<string>
+            {
+                kanalist[random].Hiragana,
+                kanalist[random].Pronunciation,
+                kanalist[rand.Next(109)].Pronunciation,
+                kanalist[rand.Next(109)].Pronunciation,
+                kanalist[rand.Next(109)].Pronunciation
+            };
+
+            ViewData["correct"] = kanalist[random];
+
+            // return control to javascript with list
+            return new JsonResult(kanadisplayvariables);
+        }
+
+
+        public async Task<IActionResult> KanaQuizKatakana()
+        {
+            return View();
         }
 
 
@@ -223,5 +255,6 @@ namespace LJSS.Controllers
             }
             return new JsonResult(kanasoundhreg);
         }
+     
     }
 }

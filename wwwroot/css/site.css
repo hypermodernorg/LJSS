@@ -11,10 +11,20 @@
 }
 
 
-.audio-button img{
-   
-   padding: 30px;
+#kanaquizdisplay {
+
+    font-size: 64px;
+    text-align: center;
     
+}
+
+#fg1 {
+
+    
+}
+
+.audio-button img {
+    padding: 30px;
 }
 
 .account {
